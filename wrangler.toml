@@ -1,0 +1,12 @@
+name = "quan"
+main = "worker.js"
+compatibility_date = "2025-06-01"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "."
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "CONTENT"
+id = "459f87b499604cc9b4132b0dd48ec1a7"

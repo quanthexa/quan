@@ -1,0 +1,8 @@
+{
+  "page_title": "How it works · QUANTHEXA",
+  "meta_description": "How QUANTHEXA works with clients from first request to long-term support.",
+  "main_html_enabled": true,
+  "main_html": "<section class=\"page-hero\"><div class=\"container reveal\"><span class=\"eyebrow\">HOW IT WORKS</span><h1>From idea to stable deployment.</h1><p class=\"lead\">A simple process: understand the business need, design the right solution, build carefully, test properly and support the system after launch.</p></div></section><section class=\"section\"><div class=\"container timeline\"><div class=\"step reveal\"><div><h3>Request review</h3><p>After you submit a service request, the project scope, contact details and business goals are reviewed.</p></div></div><div class=\"step reveal\"><div><h3>Discovery & analysis</h3><p>Your workflows, technical environment and practical requirements are analyzed before implementation begins.</p></div></div><div class=\"step reveal\"><div><h3>Architecture & proposal</h3><p>A clear structure is prepared: features, timeline, modules, integrations and support model.</p></div></div><div class=\"step reveal\"><div><h3>Development & system setup</h3><p>Software, infrastructure or operational improvements are built with a focus on reliability and clean handover.</p></div></div><div class=\"step reveal\"><div><h3>Testing, deployment & maintenance</h3><p>The solution is checked, deployed and supported so your technology continues to work smoothly.</p></div></div></div></section>",
+  "custom_css": "",
+  "custom_js": ""
+}

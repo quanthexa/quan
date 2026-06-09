@@ -1,0 +1,31 @@
+{
+  "logo_symbol": "/assets/images/quanthexa-symbol.png",
+  "logo_wordmark": "/assets/images/quanthexa-wordmark.png",
+  "header_logo": "/assets/images/quanthexa-header-logo-transparent.png",
+  "favicon": "/assets/images/favicon.png",
+  "apple_touch_icon": "/assets/images/apple-touch-icon.png",
+  "favicon_32": "/assets/images/favicon-32x32.png",
+  "cybersecurity_image": "/assets/images/cybersecurity-infrastructure.webp",
+  "ai_automation_image": "/assets/images/ai-automation-workflows.webp",
+  "cloud_devops_image": "/assets/images/cloud-devops-solutions.webp",
+  "data_monitoring_image": "/assets/images/data-analytics-monitoring.webp",
+  "api_integrations_image": "/assets/images/api-integrations-connectivity.webp",
+  "support_maintenance_image": "/assets/images/managed-support-maintenance.webp",
+  "hero_background_image": "",
+  "matrix_background_image": "",
+  "page_background_image": "",
+  "custom_image_rules": [
+    {
+      "selector": ".hero",
+      "src": "",
+      "alt": "",
+      "mode": "background"
+    },
+    {
+      "selector": ".page-hero",
+      "src": "",
+      "alt": "",
+      "mode": "background"
+    }
+  ]
+}

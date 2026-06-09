@@ -1,0 +1,8 @@
+{
+  "page_title": "Contact · QUANTHEXA",
+  "meta_description": "Contact QUANTHEXA in Paris by phone or email.",
+  "main_html_enabled": true,
+  "main_html": "<section class=\"page-hero\"><div class=\"container reveal\"><span class=\"eyebrow\">MY CONTACTS</span><h1>Feel free to write or call anytime.</h1><p class=\"lead\">I truly enjoy communicating with clients and am always happy to discuss ideas, questions and technical needs.</p></div></section><section class=\"section\"><div class=\"container split\"><div class=\"panel reveal\"><h2>QUANTHEXA</h2><div class=\"list\"><div class=\"item\"><span class=\"check\">☎</span><span>+33574251852</span></div><div class=\"item\"><span class=\"check\">@</span><span>contact@quanthexa.online</span></div><div class=\"item\"><span class=\"check\">⌖</span><span>60 RUE FRANCOIS IER, 75008 PARIS</span></div><div class=\"item\"><span class=\"check\">#</span><span>SIREN: 101 651 925</span></div></div></div><div class=\"panel reveal\"><div class=\"success\">Message successfully submitted. Your contact request has been sent for review.</div><form class=\"form\" id=\"requestForm\"><div class=\"field\"><label>Name</label><input placeholder=\"Your name\" required=\"\"/></div><div class=\"field\"><label>Email</label><input placeholder=\"you@example.com\" required=\"\" type=\"email\"/></div><div class=\"field\"><label>Message</label><textarea placeholder=\"How can QUANTHEXA help?\" required=\"\"></textarea></div><button class=\"btn\" type=\"submit\">Send</button></form></div></div></section>",
+  "custom_css": "",
+  "custom_js": ""
+}

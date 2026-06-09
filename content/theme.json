@@ -1,0 +1,15 @@
+{
+  "accent_color": "#35e57f",
+  "accent_soft": "#1d8f52",
+  "background_color": "#010302",
+  "text_color": "#e8ffee",
+  "muted_text_color": "#a5c9ad",
+  "matrix_enabled": true,
+  "matrix_opacity": 1,
+  "preloader_enabled": true,
+  "cursor_enabled": true,
+  "ui_sounds_enabled": true,
+  "card_radius": "28px",
+  "custom_css_notes": "Use custom_css in Global Settings or any page to override anything.",
+  "custom_css": ""
+}

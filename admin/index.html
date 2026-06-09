@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>QUANTHEXA Cloudflare Admin</title>
+  <style>
+    :root{--bg:#07110c;--panel:#0b1810;--line:#164229;--text:#eafff0;--muted:#95b9a1;--green:#2dff88;--danger:#ff5566;--soft:#102519}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#102519,#040705 60%);color:var(--text);font-family:Inter,Arial,sans-serif} a{color:var(--green)}
+    .login{min-height:100vh;display:grid;place-items:center;padding:24px}.login-card,.app{width:min(1180px,calc(100vw - 32px));background:rgba(8,20,13,.92);border:1px solid var(--line);border-radius:22px;box-shadow:0 24px 80px rgba(0,0,0,.45)}
+    .login-card{max-width:460px;padding:28px}.brand{display:flex;gap:12px;align-items:center;margin-bottom:20px}.brand-mark{width:40px;height:40px;border:1px solid var(--line);border-radius:12px;display:grid;place-items:center;color:var(--green);font-weight:900}.brand h1{font-size:20px;margin:0}.muted{color:var(--muted);font-size:13px;line-height:1.55}.field{margin:14px 0}.field label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:7px}.input,textarea,select{width:100%;background:#07110c;border:1px solid #1a4d2f;color:var(--text);border-radius:10px;padding:12px;font:inherit}.input:focus,textarea:focus,select:focus{outline:1px solid var(--green)} textarea{min-height:140px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:13px;line-height:1.45}.btn{background:linear-gradient(135deg,#25e878,#0b7f41);color:white;border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer}.btn.secondary{background:#13291c;border:1px solid var(--line);color:var(--text)}.btn.danger{background:#3a1218;color:#ffb8c0;border:1px solid #6d1c2a}.btn:disabled{opacity:.55;cursor:not-allowed}.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hidden{display:none!important}
+    .app{margin:22px auto;min-height:calc(100vh - 44px);display:grid;grid-template-columns:260px 1fr;overflow:hidden}.sidebar{border-right:1px solid var(--line);padding:20px;background:rgba(3,8,5,.4)}.side-title{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--green);margin-bottom:18px}.nav button{display:block;width:100%;text-align:left;background:transparent;color:var(--muted);border:1px solid transparent;border-radius:12px;padding:12px;margin:4px 0;cursor:pointer;font-weight:700}.nav button.active,.nav button:hover{background:var(--soft);border-color:var(--line);color:var(--text)}.main{padding:24px;overflow:auto;max-height:calc(100vh - 44px)}.top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:20px}.top h2{margin:0;font-size:26px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:rgba(8,20,13,.74);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}.card h3{margin:0 0 12px;font-size:18px}.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace}.status{padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#061009;color:var(--muted);font-size:13px}.status.ok{border-color:#167d42;color:#b9ffd4}.status.err{border-color:#7d2634;color:#ffc4cc}.service-item{border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;background:#07110c}.image-preview{height:70px;width:120px;object-fit:contain;background:#0c0c0c;border:1px solid var(--line);border-radius:10px}.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.tabs button{padding:8px 10px;border-radius:10px;background:#07110c;color:var(--muted);border:1px solid var(--line);cursor:pointer}.tabs button.active{color:white;background:#0f2c1b}.small{font-size:12px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}.full{grid-column:1/-1}@media(max-width:860px){.app{grid-template-columns:1fr}.sidebar{border-right:0;border-bottom:1px solid var(--line)}.grid,.two{grid-template-columns:1fr}.main{max-height:none}.top{flex-direction:column}}
+  </style>
+</head>
+<body>
+  <section id="login" class="login">
+    <div class="login-card">
+      <div class="brand"><div class="brand-mark">QX</div><div><h1>QUANTHEXA Admin</h1><div class="muted">Cloudflare editor for content, pages, images, services and legal text.</div></div></div>
+      <div id="setupStatus" class="status">Checking Cloudflare setup...</div>
+      <div class="field"><label>Admin password</label><input id="password" class="input" type="password" placeholder="Enter ADMIN_PASSWORD" /></div>
+      <button class="btn" id="loginBtn">Login</button>
+      <p class="muted">Before using this panel, create a KV binding named <b>CONTENT</b> and an environment variable <b>ADMIN_PASSWORD</b> in Cloudflare.</p>
+    </div>
+  </section>
+
+  <section id="app" class="app hidden">
+    <aside class="sidebar">
+      <div class="brand"><div class="brand-mark">QX</div><div><b>Cloudflare Admin</b><div class="muted">Live KV editor</div></div></div>
+      <div class="side-title">Sections</div>
+      <div class="nav" id="nav"></div>
+      <hr style="border-color:var(--line);border-width:0 0 1px;margin:18px 0">
+      <button class="btn secondary" id="reloadBtn">Reload</button>
+      <button class="btn danger" id="logoutBtn">Logout</button>
+    </aside>
+    <main class="main">
+      <div class="top">
+        <div><h2 id="sectionTitle">Dashboard</h2><div class="muted" id="sectionDesc">Manage website content.</div></div>
+        <div class="row"><span id="saveStatus" class="status">Not saved yet</span><button class="btn" id="saveBtn">Save to Cloudflare</button></div>
+      </div>
+      <div id="editor"></div>
+    </main>
+  </section>
+
+<script>
+const pageNames=['index','services','solutions','cases','process','request','contact','privacy','refund','terms'];
+const sections=[
+  ['dashboard','Dashboard','Setup status and quick guide'],
+  ['global','Global Website Settings','Company details, header, menu and footer'],
+  ['theme','Theme / Visual Style','Colors, effects and custom CSS'],
+  ['images','Image Manager','Logo, favicon, backgrounds and section images'],
+  ['services','Services / Prices','Service cards, prices and descriptions'],
+  ['pages','Full Page Editor','HTML, SEO, CSS and JS for every page'],
+  ['legal','Legal Text Editor','Privacy, refund and terms markdown']
+];
+let token=localStorage.getItem('qx_admin_token')||'';
+let current='dashboard';
+let state={global:{},theme:{},images:{},services:{services:[]},pages:{},legal:{privacy:'',refund:'',terms:''}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const slug=s=>String(s).replace(/[^a-z0-9_]+/gi,'_');
+async function getJson(url){const r=await fetch(url+'?v='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error(url); return r.json();}
+async function getText(url){const r=await fetch(url+'?v='+Date.now(),{cache:'no-store'}); if(!r.ok) throw new Error(url); return r.text();}
+async function apiStatus(){try{return await (await fetch('/api/status',{cache:'no-store'})).json();}catch(e){return {ok:false,hasKV:false,hasPassword:false,error:String(e)}}}
+function setStatus(msg,type=''){const el=$('#saveStatus'); el.textContent=msg; el.className='status '+type;}
+async function loadAll(){
+  setStatus('Loading...');
+  const [global,theme,images,services]=await Promise.all([
+    getJson('/content/global.json').catch(()=>({})),getJson('/content/theme.json').catch(()=>({})),getJson('/content/images.json').catch(()=>({})),getJson('/content/services.json').catch(()=>({services:[]}))
+  ]);
+  state={global,theme,images,services,pages:{},legal:{}};
+  for(const p of pageNames) state.pages[p]=await getJson('/content/pages/'+p+'.json').catch(()=>({page_title:p,meta_description:'',main_html_enabled:false,main_html:'',custom_css:'',custom_js:''}));
+  for(const k of ['privacy','refund','terms']) state.legal[k]=await getText('/content/'+k+'.md').catch(()=>`---\ntitle: ${k}\n---\n`);
+  const api=await fetch('/api/content',{cache:'no-store'}).then(r=>r.json()).catch(()=>null);
+  if(api&&api.content) state={...state,...api.content, pages:{...state.pages,...(api.content.pages||{})}, legal:{...state.legal,...(api.content.legal||{})}};
+  setStatus('Loaded', 'ok');
+}
+async function saveAll(){
+  setStatus('Saving...');
+  const res=await fetch('/api/content',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(state)});
+  const data=await res.json().catch(()=>({}));
+  if(!res.ok||!data.ok){setStatus(data.error||'Save failed','err'); alert(data.error||'Save failed'); return;}
+  setStatus('Saved '+new Date().toLocaleTimeString(),'ok');
+}
+function input(label,obj,key,type='text'){return `<div class="field"><label>${label}</label><input class="input" data-obj="${obj}" data-key="${key}" type="${type}" value="${esc(state[obj]?.[key]||'')}"></div>`}
+function textarea(label,obj,key,rows=8){return `<div class="field"><label>${label}</label><textarea data-obj="${obj}" data-key="${key}" rows="${rows}">${esc(state[obj]?.[key]||'')}</textarea></div>`}
+function jsonArea(label,obj,key){return `<div class="field"><label>${label}</label><textarea data-json="1" data-obj="${obj}" data-key="${key}" rows="9">${esc(JSON.stringify(state[obj]?.[key]||[],null,2))}</textarea></div>`}
+function bindBasic(root=document){
+  root.querySelectorAll('[data-obj][data-key]:not([data-json])').forEach(el=>{el.oninput=()=>{const o=el.dataset.obj,k=el.dataset.key; state[o][k]=el.type==='checkbox'?el.checked:el.value; setStatus('Unsaved changes');}});
+  root.querySelectorAll('[data-json]').forEach(el=>{el.oninput=()=>{try{state[el.dataset.obj][el.dataset.key]=JSON.parse(el.value); el.style.borderColor='#1a4d2f'; setStatus('Unsaved changes')}catch(e){el.style.borderColor='var(--danger)'; setStatus('Invalid JSON','err')}}});
+}
+function imageField(label,key){
+  const val=state.images[key]||''; const id='img_'+slug(key);
+  return `<div class="card"><h3>${label}</h3><div class="row"><img class="image-preview" src="${esc(val)}" onerror="this.style.display='none'"><input class="input" style="flex:1" data-image-key="${key}" value="${esc(val)}" placeholder="Image URL or data URL"><input id="${id}" type="file" accept="image/*" data-upload-key="${key}"></div><p class="muted small">Upload converts the image to a data URL and stores it in Cloudflare KV. For large images, use an external URL.</p></div>`;
+}
+function render(){
+  $('#sectionTitle').textContent=sections.find(s=>s[0]===current)?.[1]||current; $('#sectionDesc').textContent=sections.find(s=>s[0]===current)?.[2]||'';
+  let html='';
+  if(current==='dashboard') html=`<div class="card"><h3>Cloudflare Admin is installed</h3><p class="muted">This editor saves content into Cloudflare KV through <span class="mono">/api/content</span>. The public site reads saved content automatically.</p><div id="runtimeStatus" class="status">Checking runtime...</div></div><div class="card"><h3>Required Cloudflare settings</h3><ol class="muted"><li>Create KV namespace: <b>QUANTHEXA_CONTENT</b></li><li>Bind it to this Worker/Pages project as variable name: <b>CONTENT</b></li><li>Add variable/secret: <b>ADMIN_PASSWORD</b></li><li>Redeploy after adding the files from this archive.</li></ol></div>`;
+  if(current==='global') html=`<div class="grid"><div class="card"><h3>Company</h3>${input('Company name','global','company_name')}${input('Domain','global','domain')}${input('Email','global','email')}${input('Phone','global','phone')}${input('Address','global','address')}${input('SIREN / Registration number','global','siren')}${input('Footer slogan','global','footer_slogan')}</div><div class="card"><h3>Header / Footer HTML</h3><label class="muted"><input type="checkbox" data-obj="global" data-key="header_html_enabled" ${state.global.header_html_enabled?'checked':''}> Use custom header HTML</label>${textarea('Custom header HTML','global','header_html',8)}<label class="muted"><input type="checkbox" data-obj="global" data-key="footer_html_enabled" ${state.global.footer_html_enabled?'checked':''}> Use custom footer HTML</label>${textarea('Custom footer HTML','global','footer_html',8)}</div><div class="card full"><h3>Menu / Top bar / Footer links</h3><div class="two">${jsonArea('Navigation links JSON','global','navigation')}${jsonArea('Topbar items JSON','global','topbar_items')}${jsonArea('Footer links JSON','global','footer_links')}</div></div><div class="card full"><h3>Advanced snippets</h3>${textarea('Custom CSS','global','custom_css',8)}${textarea('Custom head HTML','global','custom_head_html',5)}${textarea('Custom body start HTML','global','custom_body_start_html',5)}${textarea('Custom body end HTML','global','custom_body_end_html',5)}</div></div>`;
+  if(current==='theme') html=`<div class="grid"><div class="card"><h3>Colors</h3>${input('Accent color','theme','accent_color','color')}${input('Accent soft','theme','accent_soft','color')}${input('Background color','theme','background_color','color')}${input('Text color','theme','text_color','color')}${input('Muted text color','theme','muted_text_color','color')}${input('Card radius','theme','card_radius')}</div><div class="card"><h3>Effects</h3><label><input type="checkbox" data-obj="theme" data-key="matrix_enabled" ${state.theme.matrix_enabled!==false?'checked':''}> Matrix enabled</label><br><label><input type="checkbox" data-obj="theme" data-key="preloader_enabled" ${state.theme.preloader_enabled!==false?'checked':''}> Preloader enabled</label><br><label><input type="checkbox" data-obj="theme" data-key="cursor_enabled" ${state.theme.cursor_enabled!==false?'checked':''}> Custom cursor enabled</label><br><label><input type="checkbox" data-obj="theme" data-key="ui_sounds_enabled" ${state.theme.ui_sounds_enabled!==false?'checked':''}> UI sounds enabled</label>${input('Matrix opacity','theme','matrix_opacity','number')}</div><div class="card full"><h3>Custom CSS</h3>${textarea('Theme custom CSS','theme','custom_css',16)}</div></div>`;
+  if(current==='images') html=`<div class="grid">${['logo_symbol','logo_wordmark','favicon','favicon_32','apple_touch_icon','hero_background_image','matrix_background_image','page_background_image','cybersecurity_image','ai_automation_image','cloud_devops_image','data_monitoring_image','api_integrations_image','support_maintenance_image'].map(k=>imageField(k.replace(/_/g,' ').toUpperCase(),k)).join('')}<div class="card full"><h3>Custom image rules</h3>${jsonArea('Rules JSON: selector, src, mode=image/background, alt','images','custom_image_rules')}</div></div>`;
+  if(current==='services') html=`<div class="card"><div class="row"><h3 style="margin-right:auto">Services</h3><button class="btn secondary" id="addService">Add service</button></div><div id="serviceList">${(state.services.services||[]).map((s,i)=>`<div class="service-item"><div class="row"><b>Service ${i+1}</b><button class="btn danger" data-remove-service="${i}">Remove</button></div><div class="two"><div class="field"><label>Title</label><input class="input" data-service-index="${i}" data-service-key="title" value="${esc(s.title)}"></div><div class="field"><label>Code</label><input class="input" data-service-index="${i}" data-service-key="code" value="${esc(s.code)}"></div><div class="field"><label>Price</label><input class="input" data-service-index="${i}" data-service-key="price" value="${esc(s.price)}"></div><div class="field"><label>Description</label><textarea data-service-index="${i}" data-service-key="description">${esc(s.description)}</textarea></div></div></div>`).join('')}</div></div>`;
+  if(current==='pages') html=`<div class="card"><h3>Choose page</h3><select id="pageSelect">${pageNames.map(p=>`<option value="${p}">${p}.html</option>`).join('')}</select></div><div id="pageEditor"></div>`;
+  if(current==='legal') html=`<div class="card"><h3>Choose legal page</h3><select id="legalSelect"><option value="privacy">Privacy Policy</option><option value="refund">Refund Policy</option><option value="terms">Terms</option></select></div><div id="legalEditor"></div>`;
+  $('#editor').innerHTML=html; bindBasic($('#editor'));
+  if(current==='dashboard') apiStatus().then(s=>{$('#runtimeStatus').className='status '+(s.hasKV&&s.hasPassword?'ok':'err'); $('#runtimeStatus').textContent=`KV CONTENT: ${s.hasKV?'OK':'missing'} · ADMIN_PASSWORD: ${s.hasPassword?'OK':'missing'}`});
+  if(current==='images') bindImages();
+  if(current==='services') bindServices();
+  if(current==='pages') renderPageEditor();
+  if(current==='legal') renderLegalEditor();
+}
+function bindImages(){document.querySelectorAll('[data-image-key]').forEach(el=>el.oninput=()=>{state.images[el.dataset.imageKey]=el.value; setStatus('Unsaved changes')}); document.querySelectorAll('[data-upload-key]').forEach(inp=>inp.onchange=()=>{const f=inp.files[0]; if(!f)return; const reader=new FileReader(); reader.onload=()=>{state.images[inp.dataset.uploadKey]=reader.result; setStatus('Unsaved image'); render();}; reader.readAsDataURL(f);});}
+function bindServices(){document.querySelectorAll('[data-service-index]').forEach(el=>el.oninput=()=>{state.services.services[+el.dataset.serviceIndex][el.dataset.serviceKey]=el.value; setStatus('Unsaved changes')}); document.querySelectorAll('[data-remove-service]').forEach(btn=>btn.onclick=()=>{state.services.services.splice(+btn.dataset.removeService,1); setStatus('Unsaved changes'); render();}); $('#addService')?.addEventListener('click',()=>{state.services.services.push({title:'New service',code:'QX-SVC',price:'from €0',description:'Service description'}); render();});}
+function renderPageEditor(){const sel=$('#pageSelect'); const box=$('#pageEditor'); const draw=()=>{const p=sel.value; const d=state.pages[p] ||= {}; box.innerHTML=`<div class="card"><h3>${p}.html</h3><div class="field"><label>Browser page title</label><input class="input" id="pt" value="${esc(d.page_title||'')}"></div><div class="field"><label>SEO meta description</label><textarea id="pm">${esc(d.meta_description||'')}</textarea></div><label class="muted"><input id="pe" type="checkbox" ${d.main_html_enabled?'checked':''}> Use editable main HTML</label><div class="field"><label>Full page content HTML</label><textarea id="ph" rows="22">${esc(d.main_html||'')}</textarea></div><div class="field"><label>Custom CSS for this page</label><textarea id="pc" rows="10">${esc(d.custom_css||'')}</textarea></div><div class="field"><label>Custom JS for this page</label><textarea id="pj" rows="8">${esc(d.custom_js||'')}</textarea></div></div>`; ['pt','pm','ph','pc','pj'].forEach(id=>$('#'+id).oninput=()=>{d[{pt:'page_title',pm:'meta_description',ph:'main_html',pc:'custom_css',pj:'custom_js'}[id]]=$('#'+id).value; setStatus('Unsaved changes')}); $('#pe').onchange=()=>{d.main_html_enabled=$('#pe').checked; setStatus('Unsaved changes')};}; sel.onchange=draw; draw();}
+function renderLegalEditor(){const sel=$('#legalSelect'); const box=$('#legalEditor'); const draw=()=>{const k=sel.value; box.innerHTML=`<div class="card"><h3>${k}</h3><div class="field"><label>Markdown content</label><textarea id="legalText" rows="28">${esc(state.legal[k]||'')}</textarea></div></div>`; $('#legalText').oninput=()=>{state.legal[k]=$('#legalText').value; setStatus('Unsaved changes')};}; sel.onchange=draw; draw();}
+function initNav(){const nav=$('#nav'); nav.innerHTML=sections.map(s=>`<button data-section="${s[0]}">${s[1]}</button>`).join(''); nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{current=b.dataset.section; updateNav(); render();}); updateNav();}
+function updateNav(){document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.section===current));}
+async function login(){const password=$('#password').value; const r=await fetch('/api/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({password})}); const data=await r.json().catch(()=>({})); if(!r.ok||!data.ok){alert(data.error||'Login failed'); return;} token=data.token; localStorage.setItem('qx_admin_token',token); await startApp();}
+async function startApp(){ $('#login').classList.add('hidden'); $('#app').classList.remove('hidden'); initNav(); await loadAll(); render(); }
+$('#loginBtn').onclick=login; $('#password').addEventListener('keydown',e=>{if(e.key==='Enter')login()}); $('#saveBtn').onclick=saveAll; $('#reloadBtn').onclick=async()=>{await loadAll(); render();}; $('#logoutBtn').onclick=()=>{localStorage.removeItem('qx_admin_token'); location.reload();}; apiStatus().then(s=>{$('#setupStatus').className='status '+(s.hasKV&&s.hasPassword?'ok':'err'); $('#setupStatus').textContent=`Runtime: KV CONTENT ${s.hasKV?'OK':'missing'} · ADMIN_PASSWORD ${s.hasPassword?'OK':'missing'}`}); if(token) startApp();
+</script>
+</body>
+</html>

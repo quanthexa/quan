@@ -1,0 +1,22 @@
+{
+  "services": [
+    {
+      "title": "Software Development & Custom Solutions",
+      "code": "QX-SVC-01",
+      "price": "from €1,200",
+      "description": "I design and develop software tailored specifically to your needs. From the initial idea to the final deployment, I create applications that streamline your processes, improve efficiency, and help your business grow."
+    },
+    {
+      "title": "IT Operations & System Management",
+      "code": "QX-SVC-02",
+      "price": "from €900 / month",
+      "description": "I take care of your IT systems so they run smoothly every day. I monitor networks, manage servers, optimize performance, and help prevent issues before they happen."
+    },
+    {
+      "title": "Software Support & Maintenance",
+      "code": "QX-SVC-03",
+      "price": "from €650 / month",
+      "description": "I provide ongoing support to keep your software working at its best: bug fixes, feature updates, operational assistance, and reliable maintenance for business-critical tools."
+    }
+  ]
+}

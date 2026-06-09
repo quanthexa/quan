@@ -1,0 +1,80 @@
+{
+  "company_name": "QUANTHEXA",
+  "domain": "quanthexa.online",
+  "email": "contact@quanthexa.online",
+  "phone": "+33574251852",
+  "address": "60 RUE FRANCOIS IER, 75008 PARIS",
+  "siren": "101 651 925",
+  "footer_slogan": "Simplifying IT, Empowering Your Business.",
+  "logo_symbol": "/assets/images/quanthexa-symbol.png",
+  "logo_wordmark": "/assets/images/quanthexa-wordmark.png",
+  "favicon": "/assets/images/favicon.png",
+  "topbar_items": [
+    "ENCRYPTED CHANNEL // NODE: {domain}",
+    "CONTACT: {email}",
+    "SUPPORT: {phone}",
+    "QX STATUS: ONLINE"
+  ],
+  "navigation": [
+    {
+      "label": "Services",
+      "url": "services.html",
+      "style": "normal"
+    },
+    {
+      "label": "Solutions",
+      "url": "solutions.html",
+      "style": "normal"
+    },
+    {
+      "label": "Approach",
+      "url": "cases.html",
+      "style": "normal"
+    },
+    {
+      "label": "How it works",
+      "url": "process.html",
+      "style": "normal"
+    },
+    {
+      "label": "Contact",
+      "url": "contact.html",
+      "style": "normal"
+    },
+    {
+      "label": "Request service",
+      "url": "request.html",
+      "style": "button"
+    }
+  ],
+  "footer_links": [
+    {
+      "label": "Solutions",
+      "url": "solutions.html"
+    },
+    {
+      "label": "Privacy policy",
+      "url": "privacy.html"
+    },
+    {
+      "label": "Refund policy",
+      "url": "refund.html"
+    },
+    {
+      "label": "Terms of service",
+      "url": "terms.html"
+    },
+    {
+      "label": "Contact",
+      "url": "contact.html"
+    }
+  ],
+  "header_html_enabled": false,
+  "header_html": "<header class=\"topbar topbar-hq topbar-hq-v3\"> <div class=\"topbar-signal topbar-signal-v3\"> <div class=\"container topbar-signal-inner topbar-signal-inner-v3\"> <span>ENCRYPTED CHANNEL // NODE: QUANTHEXA.ONLINE</span> <span>CONTACT: <span data-site-email=\"\">contact@quanthexa.online</span></span> <span>SUPPORT: <span data-site-phone=\"\">+33574251852</span></span> <span>QX STATUS: ONLINE</span> </div> </div> <div class=\"container nav nav-hacker nav-hq nav-hq-v3\"> <div class=\"nav-left nav-left-v3\"> <a class=\"brand brand-split\" href=\"index.html\"><img alt=\"QUANTHEXA logo\" class=\"brand-symbol\" src=\"assets/images/quanthexa-symbol.png\"/><span aria-hidden=\"true\" class=\"brand-separator\"></span><img alt=\"QUANTHEXA\" class=\"brand-wordmark\" src=\"assets/images/quanthexa-wordmark.png\"/></a> </div> <nav class=\"navlinks navlinks-hacker navlinks-hq navlinks-hq-v3\"> <a href=\"services.html\">Services</a> <a href=\"solutions.html\">Solutions</a> <a href=\"cases.html\">Approach</a> <a href=\"process.html\">How it works</a> <a href=\"contact.html\">Contact</a> <a class=\"btn btn-cta-hacker\" href=\"request.html\">Request service</a> </nav> <button class=\"btn secondary hamb\">Menu</button> </div> </header>",
+  "footer_html_enabled": false,
+  "footer_html": "<footer class=\"footer\"> <div class=\"container footer-grid\"> <div><b>QUANTHEXA</b><br/>Simplifying IT, Empowering Your Business.<br/><span class=\"micro\">SASU · SIREN <span data-site-siren=\"\">101 651 925</span> · <span data-site-address=\"\">60 RUE FRANCOIS IER, 75008 PARIS</span></span><br/><span class=\"micro\"><span data-site-phone=\"\">+33574251852</span> · <span data-site-email=\"\">contact@quanthexa.online</span></span></div> <div class=\"footer-links\"><a href=\"solutions.html\">Solutions</a><a href=\"privacy.html\">Privacy policy</a><a href=\"refund.html\">Refund policy</a><a href=\"terms.html\">Terms of service</a><a href=\"contact.html\">Contact</a></div> </div> </footer>",
+  "custom_css": "",
+  "custom_head_html": "",
+  "custom_body_start_html": "",
+  "custom_body_end_html": ""
+}
